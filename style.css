@@ -1,66 +1,27 @@
-/* Layout */
-.main {
-    display: flex;
-    padding: 2em;
-    height: 90vh;
-    justify-content: center;
-    align-items: middle;
+const HOURHAND = document.querySelector("#hour");
+const MINUTEHAND = document.querySelector("#minute");
+const SECONDHAND = document.querySelector("#second");
+
+var date = new Date();
+    console.log(date);
+    let hr = date.getHours();
+    let min = date.getMinutes();
+    let sec = date.getSeconds();
+    console.log("Hour: " + hr + " Minute: " + min + " Seconds: ")
+
+    let hrPosition = (hr*360/12)+(min*(360/60)/12);
+    let minPosition = (min*360/60)+(sec*(360/60)/60);
+    let secPosition = sec*360/60;
+
+function runTheClock() {
+
+    secPosition = secPosition + 6;
+    minPosition = minPosition + (6/60);
+    hrPosition = hrPosition + (3/360);
+
+    HOURHAND.style.transform = "rotate(" + hrPosition + "deg)";
+    MINUTEHAND.style.transform = "rotate(" + minPosition + "deg)";
+    SECONDHAND.style.transform = "rotate(" + secPosition + "deg)";
 }
 
-.clockbox,
-#clock {
-    width: 100%;
-}
-
-/* Clock styles */
-.circle {
-    fill: none;
-    stroke: #000;
-    stroke-width: 9;
-    stroke-miterlimit: 10;
-}
-
-.mid-circle {
-    fill: #000;
-}
-.hour-marks {
-    fill: none;
-    stroke: #000;
-    stroke-width: 9;
-    stroke-miterlimit: 10;
-}
-
-.hour-arm {
-    fill: none;
-    stroke: #000;
-    stroke-width: 17;
-    stroke-miterlimit: 10;
-}
-
-.minute-arm {
-    fill: none;
-    stroke: #000;
-    stroke-width: 11;
-    stroke-miterlimit: 10;
-}
-
-.second-arm {
-    fill: none;
-    stroke: #000;
-    stroke-width: 4;
-    stroke-miterlimit: 10;
-}
-
-/* Transparent box ensuring arms center properly. */
-.sizing-box {
-    fill: none;
-}
-
-/* Make all arms rotate around the same center point. */
-/* Optional: Use transition for animation. */
-#hour,
-#minute,
-#second {
-    transform-origin: 300px 300px;
-    transition: transform .5s ease-in-out;
-}
+var interval = setInterval(runTheClock, 1000);
